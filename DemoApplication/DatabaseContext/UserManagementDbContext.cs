@@ -1,10 +1,11 @@
 ﻿using System.Data.Entity;
 using System.Reflection;
+using Mehdime.Entity;
 using Numero3.EntityFramework.Demo.DomainModel;
 
 namespace Numero3.EntityFramework.Demo.DatabaseContext
 {
-	public class UserManagementDbContext : DbContext
+	public class UserManagementDbContext : DbContext, IDbContext
 	{
 		// Map our 'User' model by convention
 		public DbSet<User> Users { get; set; }

@@ -29,30 +29,30 @@ namespace Mehdime.Entity
     /// </summary>
     public class DbContextCollection : IDbContextCollection
     {
-        private Dictionary<Type, DbContext> _initializedDbContexts;
-        private Dictionary<DbContext, DbContextTransaction> _transactions; 
+        private Dictionary<Type, IDbContext> _initializedDbContexts;
+        private Dictionary<IDbContext, DbContextTransaction> _transactions; 
         private IsolationLevel? _isolationLevel;
         private readonly IDbContextFactory _dbContextFactory;
         private bool _disposed;
         private bool _completed;
         private bool _readOnly;
 
-        internal Dictionary<Type, DbContext> InitializedDbContexts { get { return _initializedDbContexts; } }
+        internal Dictionary<Type, IDbContext> InitializedDbContexts { get { return _initializedDbContexts; } }
 
         public DbContextCollection(bool readOnly = false, IsolationLevel? isolationLevel = null, IDbContextFactory dbContextFactory = null)
         {
             _disposed = false;
             _completed = false;
 
-            _initializedDbContexts = new Dictionary<Type, DbContext>();
-            _transactions = new Dictionary<DbContext, DbContextTransaction>();
+            _initializedDbContexts = new Dictionary<Type, IDbContext>();
+            _transactions = new Dictionary<IDbContext, DbContextTransaction>();
 
             _readOnly = readOnly;
             _isolationLevel = isolationLevel;
             _dbContextFactory = dbContextFactory;
         }
 
-        public TDbContext Get<TDbContext>() where TDbContext : DbContext
+        public TDbContext Get<TDbContext>() where TDbContext : class, IDbContext
         {
             if (_disposed)
                 throw new ObjectDisposedException("DbContextCollection");
