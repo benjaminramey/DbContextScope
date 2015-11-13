@@ -33,6 +33,6 @@ namespace Mehdime.Entity
     /// </remarks>
     public interface IDbContextFactory
     {
-		TDbContext CreateDbContext<TDbContext>() where TDbContext : IDbContext;
+		TDbContext CreateDbContext<TDbContext>() where TDbContext : class, IDbContext;
     }
 }
